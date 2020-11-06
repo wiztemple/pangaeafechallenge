@@ -1,0 +1,129 @@
+.modal {
+  width: 100%;
+  height: 100%;
+  /* display: none; */
+  padding-top: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.438);
+  overflow: hidden;
+}
+.modal-content-md,
+.modal-content-sm {
+  margin: 0 auto;
+  background-color: #fefefe;
+  border-radius: 5px;
+}
+.modal-content {
+  max-height: calc(100vh - 160px);
+  position: relative;
+  background-color: rgb(238, 238, 238);
+  margin: auto;
+  padding: 0;
+  width: 80%;
+  position: relative;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  animation-name: modalopen;
+  animation-duration: 1500ms;
+}
+.modal-header {
+  position: relative;
+  background-color: #eee;
+  padding: 15px 20px;
+  font-size: 18px;
+  color: #444;
+  font-weight: 400;
+}
+.modal-header-text {
+  font-size: 22px;
+  font-weight: 600;
+}
+.modal-body {
+  position: relative;
+  height: 450px;
+  padding: 20px;
+  overflow-y: scroll;
+}
+.modal-footer {
+  position: relative;
+  padding: 15px 20px;
+  background-color: rgba(0, 0, 0, 0.01);
+}
+.closemodal {
+  position: absolute;
+  right: 20px;
+}
+.modal.active {
+  display: block;
+}
+
+.close-modal {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  right: 5px;
+  top: 5px;
+  border-radius: 50%;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #eee;
+}
+
+@media screen and (min-width: 769px) {
+  .modal-content {
+    margin: 0 auto;
+    max-height: calc(100vh - 40px);
+    width: 500px;
+  }
+  .modal-content-md {
+    margin: 0 auto;
+    /* max-height: calc(100vh - 40px); */
+    width: 750px;
+  }
+  .modal-content-sm {
+    margin: 0 auto;
+    width: 500px;
+  }
+}
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-top: 1px solid #000;
+}
+.subtotal > span:first-child {
+  font-weight: 600;
+}
+.subtotal > span:last-child {
+  font-weight: 500;
+}
+.checkout-btn {
+  display: block;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  border-radius: 1px;
+}
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

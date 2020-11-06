@@ -1,0 +1,26 @@
+.loader {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 30px;
+  width: 25%;
+  height: 140px;
+}
+.line {
+  position: absolute;
+  top: 50%;
+  margin-left: 10px;
+  width: 60px;
+  height: 4px;
+  background: #000;
+  animation: spin 1.5s infinite ease;
+}
+.line:nth-of-type(2) { animation-delay: 0.1s; } 
+.line:nth-of-type(3) { animation-delay: 0.2s; } 
+.line:nth-of-type(4) { animation-delay: 0.3s; } 
+
+@keyframes spin { 
+  100% { 
+    transform: rotate(360deg); 
+  } 
+} 
