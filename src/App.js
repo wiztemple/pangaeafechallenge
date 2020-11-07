@@ -21,9 +21,11 @@ const App = () => {
         <div className="banner">
           <div className="container">
             <h1 className="all-products-title">All Products</h1>
-            <div>
-              <Products />
-            </div>
+
+
+            <Products />
+
+
           </div>
         </div>
 

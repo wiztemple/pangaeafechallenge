@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import ProductCard from '../ProductCard';
 import Modal from "../Modal";
@@ -19,10 +19,61 @@ const GET_ALL_PRODUCTS = gql`
 
 const Products = () => {
   const [showModal, setShowModal] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [cartArr, setCartArr] = useState([]);
+  const [currency, setCurrency] = useState("$");
   const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
+
+  useEffect(() => {
+    calculateTotal();
+  }, [cartArr])
+
   const onToggle = () => {
     setShowModal(!showModal);
   };
+
+  const callback = (_product) => {
+    let quantity = 1;
+    if (cartArr.length > 0) {
+      for (let i = 0; i < cartArr.length; i++) {
+        if (cartArr[i].id === _product.id) {
+
+          cartArr[i].quantity++;
+          setCartArr([...cartArr], () => { });
+
+          return;
+        }
+      }
+      const product = { ..._product, quantity }
+      setCartArr([...cartArr, product]);
+
+    } else {
+      const product = { ..._product, quantity }
+      setCartArr([...cartArr, product]);
+    }
+  }
+  const removeItem = (id) => {
+    const newCart = cartArr.filter(v => {
+      console.log(v.id, id);
+      return v.id !== id
+    });
+    setCartArr([...newCart]);
+  }
+
+  const currencyHandler = (currencyType) => {
+    // console.log(currencyType, ["Type"]);
+    setCurrency(currencyType);
+  }
+
+  const calculateTotal = () => {
+    let sum = 0;
+    for (let i = 0; i < cartArr.length; i++) {
+      sum += (Number(cartArr[i].quantity) * Number(cartArr[i].price));
+    }
+
+    console.log(sum, ["sum"], cartArr.length);
+    setTotal(sum);
+  }
   if (loading) {
     return <div className="loader-wrapper"><Loader /></div>;
   }
@@ -36,6 +87,8 @@ const Products = () => {
         <div className="md-col-4 sm-col-6" key={product.id}>
           <ProductCard
             key={product.id}
+            callback={callback}
+            id={product.id}
             onToggle={onToggle}
             image={product.image_url}
             title={product.title}
@@ -70,37 +123,36 @@ const Products = () => {
                   />
                 </svg>
               </span>
-              <SelectCurrency />
+              <SelectCurrency currencyHandler={currencyHandler} />
             </div>
             <div className="modal-body">
 
               <div className="cartitem-wrapper">
-                <CartItem
-                  cartItemTitle="Cocooil meta"
-                  cartItemPrice="40"
-                  cartItemImage="https://images.unsplash.com/photo-1526947425960-945c6e72858f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                />
-                <CartItem
-                  cartItemTitle="Cocooil meta"
-                  cartItemPrice="40"
-                  cartItemImage="https://images.unsplash.com/photo-1567433517180-d3e56cf7f81e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                />
-                <CartItem
-                  cartItemTitle="Cocooil meta"
-                  cartItemPrice="40"
-                  cartItemImage="https://images.unsplash.com/photo-1583209814683-c023dd293cc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                />
-                <CartItem
-                  cartItemTitle="Cocooil meta"
-                  cartItemPrice="40"
-                  cartItemImage="https://images.unsplash.com/photo-1542452255191-c85a98f2c5d1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                />
+                {cartArr.map(val => {
+                  console.log(total, ["Toatla"]);
+                  return (
+                    <CartItem
+                      key={val.id}
+                      id={val.id}
+                      cartItemTitle={val.title}
+                      cartItemPrice={val.price}
+                      cartItemImage={val.image}
+                      itemQuantity={val.quantity}
+                      removeItem={removeItem}
+                      currency={currency}
+                      calculateTotal={calculateTotal}
+                    />
+                  )
+                })
+                }
+
+
               </div>
             </div>
             <div className="modal-footer">
               <div className="subtotal">
                 <span>Subtotal</span>
-                <span>60</span>
+                <span>{total}</span>
               </div>
               <div className="flex">
                 <button className="button checkout-btn">Proceed to checkout</button>

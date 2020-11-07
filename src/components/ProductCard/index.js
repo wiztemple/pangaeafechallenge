@@ -3,12 +3,16 @@ import React, { useState } from 'react';
 // product card style
 import './ProductCardStyle.css';
 
-const ProductCard = ({ image, title, price, onToggle }) => {
+const ProductCard = (data) => {
+  const { image, title, price, onToggle, callback } = data;
   const [showModal, setShowModal] = useState(false);
-  const onClick = () => {
+
+  const onClick = (payload) => {
+    callback(payload);
     setShowModal(true);
     if (onToggle) onToggle(showModal);
   };
+
   return (
     <div className="card">
       <div className="card-image">
@@ -17,8 +21,8 @@ const ProductCard = ({ image, title, price, onToggle }) => {
       <div className="card-content">
         <h1>{title}</h1>
         <div className="card-footer">
-          <span className="card-price">{price}</span>
-          <button className="button button-small" onClick={onClick}>Add to Card</button>
+          <span className="card-price">${price}</span>
+          <button className="button button-small" onClick={() => onClick(data)}>Add to Card</button>
         </div>
       </div>
     </div>
