@@ -32,13 +32,13 @@ const Products = () => {
     setShowModal(!showModal);
   };
 
-  const callback = (_product) => {
+  const callback = (_product, decreament = false) => {
     let quantity = 1;
     if (cartArr.length > 0) {
       for (let i = 0; i < cartArr.length; i++) {
         if (cartArr[i].id === _product.id) {
 
-          cartArr[i].quantity++;
+          decreament ? cartArr[i].quantity-- : cartArr[i].quantity++;
           setCartArr([...cartArr], () => { });
 
           return;
@@ -74,6 +74,7 @@ const Products = () => {
     console.log(sum, ["sum"], cartArr.length);
     setTotal(sum);
   }
+
   if (loading) {
     return <div className="loader-wrapper"><Loader /></div>;
   }
@@ -140,7 +141,9 @@ const Products = () => {
                       itemQuantity={val.quantity}
                       removeItem={removeItem}
                       currency={currency}
+                      product={val}
                       calculateTotal={calculateTotal}
+                      update={callback}
                     />
                   )
                 })
@@ -152,7 +155,7 @@ const Products = () => {
             <div className="modal-footer">
               <div className="subtotal">
                 <span>Subtotal</span>
-                <span>{total}</span>
+                <span>{currency + " " + total}</span>
               </div>
               <div className="flex">
                 <button className="button checkout-btn">Proceed to checkout</button>

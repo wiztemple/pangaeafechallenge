@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 // cart ite style
 import './CartItemStyle.css';
 
-const CartItem = ({ cartItemTitle, cartItemPrice, cartItemImage, itemQuantity, removeItem, id, currency, calculateTotal }) => {
+const CartItem = ({ cartItemTitle, cartItemPrice, cartItemImage, itemQuantity, removeItem, id, currency, calculateTotal, product, update }) => {
   const [currentCount, setCurrentCount] = useState(itemQuantity);
 
   const incrementCount = () => {
     setCurrentCount(currentCount + 1)
+    update(product);
     calculateTotal();
   }
 
   const decrementCount = () => {
     if (currentCount > 0) {
       setCurrentCount(currentCount - 1)
+      update(product, true);
       calculateTotal();
     }
 
