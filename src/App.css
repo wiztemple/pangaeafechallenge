@@ -65,6 +65,7 @@ select {
 /*grid*/
 .full-width {
   width: 100%;
+  padding: 0 20px;
 }
 
 
@@ -72,11 +73,11 @@ select {
   .sm-col-6 {
     width: 50%;
   }
+  .sm-col-6 {
+    padding: 0 20px;
+  }
 }
 @media (min-width: 768px) {
-  /* .container {
-    max-width: 720px;
-  } */
   .loader-wrapper {
     display: flex;
     justify-content: center;
@@ -86,19 +87,13 @@ select {
     text-align: center;
     font-size: 0;
   }
- 
+
   .md-col-4 {
     width: 33.333333%;
   }
   
   .md-col-4 {
     padding: 0 20px;
-  }
-  .md-full-width {
-    width: 100%;
-  }
-  .md-full-screen {
-    width: 100vw;
   }
   /*utilities*/
   .md-mt-20 {
