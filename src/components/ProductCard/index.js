@@ -22,7 +22,7 @@ const ProductCard = (data) => {
         <h1>{title}</h1>
         <div className="card-footer">
           <span className="card-price">${price}</span>
-          <button className="button button-small" onClick={() => onClick(data)}>Add to Card</button>
+          <button className="button button-small" onClick={() => onClick(data)}>Add to Cart</button>
         </div>
       </div>
     </div>
