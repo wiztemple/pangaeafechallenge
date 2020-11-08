@@ -54,14 +54,12 @@ const Products = () => {
   }
   const removeItem = (id) => {
     const newCart = cartArr.filter(v => {
-      console.log(v.id, id);
       return v.id !== id
     });
     setCartArr([...newCart]);
   }
 
   const currencyHandler = (currencyType) => {
-    // console.log(currencyType, ["Type"]);
     setCurrency(currencyType);
   }
 
@@ -85,7 +83,7 @@ const Products = () => {
   return (
     <div className="columns">
       {data.products.map(product => (
-        <div className="md-col-4 sm-col-6" key={product.id}>
+        <div className="full-width md-col-4 sm-col-6" key={product.id}>
           <ProductCard
             key={product.id}
             callback={callback}
@@ -127,27 +125,27 @@ const Products = () => {
               <SelectCurrency currencyHandler={currencyHandler} />
             </div>
             <div className="modal-body">
-
               <div className="cartitem-wrapper">
-                {cartArr.map(val => {
-                  console.log(total, ["Toatla"]);
-                  return (
-                    <CartItem
-                      key={val.id}
-                      id={val.id}
-                      cartItemTitle={val.title}
-                      cartItemPrice={val.price}
-                      cartItemImage={val.image}
-                      itemQuantity={val.quantity}
-                      removeItem={removeItem}
-                      currency={currency}
-                      product={val}
-                      calculateTotal={calculateTotal}
-                      update={callback}
-                    />
-                  )
-                })
-                }
+                {cartArr.length === 0 ? <p>Your Cart is empty</p> : (
+                  cartArr.map(val => {
+                    console.log(total, ["Toatla"]);
+                    return (
+                      <CartItem
+                        key={val.id}
+                        id={val.id}
+                        cartItemTitle={val.title}
+                        cartItemPrice={val.price}
+                        cartItemImage={val.image}
+                        itemQuantity={val.quantity}
+                        removeItem={removeItem}
+                        currency={currency}
+                        product={val}
+                        calculateTotal={calculateTotal}
+                        update={callback}
+                      />
+                    )
+                  })
+                )}
 
 
               </div>

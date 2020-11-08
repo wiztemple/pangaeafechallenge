@@ -6,7 +6,6 @@ query currency {
   currency 
 }
 `
-
 const SelectCurrency = ({ currencyHandler }) => {
   const { loading, error, data } = useQuery(GET_ALL_CURRENCIES);
   const [currencyType, setCurrencyType] = useState("USD")
@@ -17,9 +16,6 @@ const SelectCurrency = ({ currencyHandler }) => {
     currencyHandler(currency);
     setCurrencyType(currency);
   }
-  // const formatNumber = n => {
-  //   return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyType }).format(n);
-  // }
   console.log('currencyType', currencyType);
   if (loading) return <p>Loading...</p>
   if (error) return <p>Oops, there's an error!</p>
